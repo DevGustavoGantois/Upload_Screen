@@ -16,6 +16,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import axios from "axios";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 
 type TablePropsUpload = {
@@ -83,7 +84,9 @@ export default function Page() {
                 <TableRow key={row.id}>
                   <TableCell className="font-medium">{row.id}</TableCell>
                   <TableCell>{row.date}</TableCell>
-                  <TableCell>{row.file}</TableCell>
+                  <TableCell>
+                    <Link href={row.file} rel="noopener noreferrer" className="text-underline text-blue-900">Baixar</Link>
+                 </TableCell>
                   <TableCell>{row.status ? "Ativo" : "Inativo"}</TableCell>
                 </TableRow>
               ))}
