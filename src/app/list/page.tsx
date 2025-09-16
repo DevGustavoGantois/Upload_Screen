@@ -15,6 +15,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import ProtectedRoute from "@/utils/protected-route";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
@@ -53,7 +54,8 @@ export default function Page() {
     : contentTable;
 
   return (
-    <section className="max-w-7xl mx-auto p-8">
+    <ProtectedRoute>
+        <section className="max-w-7xl mx-auto p-8">
       {isLoading ? (
         <p className="text-center">Carregando...</p>
       ) : contentTable.length > 0 ? (
@@ -109,5 +111,6 @@ export default function Page() {
         </div>
       )}
     </section>
+    </ProtectedRoute>
   );
 }
