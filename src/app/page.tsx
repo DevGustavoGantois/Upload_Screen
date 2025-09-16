@@ -7,12 +7,12 @@ export default function Page() {
      <main className="max-w-[1000px] mx-auto mt-20 lg:mt-60 p-8">
       <Card>
         <CardHeader>
-          <CardTitle>Login</CardTitle>
-          <CardDescription>Preencha os campos abaixo para entrar na plataforma.</CardDescription>
+          <CardTitle className="text-2xl font-bold text-start">Login</CardTitle>
+          <CardDescription className="text-base text-start">Preencha os campos abaixo para entrar na plataforma.</CardDescription>
+        </CardHeader>
           <CardContent>
             <LoginForm />
           </CardContent>
-        </CardHeader>
       </Card>
     </main> 
     </>
