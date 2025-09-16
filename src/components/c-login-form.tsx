@@ -10,103 +10,80 @@ import { Button } from "./ui/button";
 import { useRouter } from "next/navigation";
 
 export function LoginForm() {
-    const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
 
-    const router = useRouter();
+  const formSchema = z.object({
+    user: z.string().min(4, "O usuário precisa ter no mínimo 4 caracteres").max(16, "O usuário pode ter no máximo 16 caracteres"),
+    password: z.string().min(8, "A senha precisa ter no mínimo 8 caracteres").max(32, "A senha pode ter no máximo 32 caracteres"),
+  });
 
-    const formSchema = z.object({
-        user: z.string().min(8, "O email precisa ter no mínimo 8 caracteres").max(16, "O email pode ter no máximo 16 caracteres"),
-        select: z.string().optional(),
-        password: z.string().min(8, "A senha precisa ter no mínimo 8 caracteres").max(13, "A senha pode ter no máximo 16 caracteres.")
-    });
+  type FormDataSchema = z.infer<typeof formSchema>;
 
-    type FormDataSchema = z.infer<typeof formSchema>;
+  const form = useForm<FormDataSchema>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      user: "",
+      password: "",
+    },
+  });
 
-    const form = useForm<FormDataSchema>({
-        resolver: zodResolver(formSchema),
-        defaultValues: {
-            user: "",
-            select: "",
-            password: "",
-        },
-    });
+  const onSubmit = async (value: FormDataSchema) => {
+    try {
+      setIsLoading(true);
 
-    const onSubmit = (value: FormDataSchema) => {
-        try {
-            axios.post("https://api_do_upload_de_arquivos/login", value)
-            setTimeout(() => {
-                router.push("/list")
-            }, 3000);
-        }
-        catch (error) {
-            console.log("Erro ao chamar a API", error)
-        }
-        finally {
-            setIsLoading(false);
-        }
+      if (value.user === "ronni" && value.password === "ronniHomemDosSotwares123") {
+        await axios.post("https://api_do_upload_de_arquivos/login", value);
+        router.push("/list");
+      } else {
+        window.alert("Usuário ou senha incorretos!");
+      }
+    } catch (error) {
+      console.error("Erro ao chamar a API", error);
+    } finally {
+      setIsLoading(false);
     }
+  };
 
-    return (
-        <>
-        <div>
-            <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-4">
-                    <FormField name="user" control={form.control} render={({field}) => (
-                        <FormItem>
-                            <FormLabel>Nome de usuário</FormLabel>
-                            <FormControl>
-                                <Input
-                                type="text"
-                                placeholder="Digite seu nome de usuário" 
-                                {...field}
-                                />
-                            </FormControl>
-                            <FormMessage />
-                        </FormItem>
-                    )} />
-                    {/* <FormField name="select" control={form.control} render={({field}) => (
-                        <FormItem>
-                            <FormLabel>Qual loteamento?</FormLabel>
-                            <Select onValueChange={field.onChange} defaultValue={field.value}>
-                                <FormControl>
-                                    <SelectTrigger className="w-full">
-                                        <SelectValue placeholder="Escolha uma opção" />
-                                    </SelectTrigger>
-                                </FormControl>
-                                <SelectContent>
-                                    {selectOptions.map((item, index) => {
-                                        return (
-                                            <span key={index}>  
-                                                <SelectItem value={(index + 1).toString()}>{item}</SelectItem>
-                                            </span>
-                                        )
-                                    })}
-                                </SelectContent>
-                            </Select>
-                            <FormMessage />   
-                        </FormItem>
-                    )} /> */}
-                    <FormField name="password" control={form.control} render={({field}) => (
-                        <FormItem>
-                            <FormLabel>Senha</FormLabel>
-                            <FormControl>
-                                <Input
-                                type="password"
-                                placeholder="Digite sua senha..."
-                                {...field} 
-                                />
-                            </FormControl>
-                            <FormMessage />
-                        </FormItem>
-                    )} />
-                    <div className="w-full mt-4 flex flex-col justify-center items-center">
-                    <Button className="w-full cursor-pointer" disabled={isLoading}>
-                        {isLoading ? "Entrando..." : "Entrar"}
-                    </Button>
-                    </div>
-                </form>
-            </Form>
-        </div>
-        </>
-    )
+  return (
+    <div>
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-4">
+          <FormField
+            name="user"
+            control={form.control}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Nome de usuário</FormLabel>
+                <FormControl>
+                  <Input type="text" placeholder="Digite seu nome de usuário" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            name="password"
+            control={form.control}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Senha</FormLabel>
+                <FormControl>
+                  <Input type="password" placeholder="Digite sua senha..." {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <div className="w-full mt-4 flex flex-col justify-center items-center">
+            <Button className="w-full cursor-pointer" disabled={isLoading}>
+              {isLoading ? "Entrando..." : "Entrar"}
+            </Button>
+          </div>
+        </form>
+      </Form>
+    </div>
+  );
 }
