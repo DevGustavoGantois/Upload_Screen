@@ -8,6 +8,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 export function LoginForm() {
   const [isLoading, setIsLoading] = useState(false);
@@ -34,9 +35,11 @@ export function LoginForm() {
 
       if (value.user === "ronni" && value.password === "ronniHomemDosSotwares123") {
         await axios.post("https://api_do_upload_de_arquivos/login", value);
+        toast.success(`O Login do usuário ${value.user} foi realizado com sucesso!`)
         router.push("/list");
       } else {
-        window.alert("Usuário ou senha incorretos!");
+        toast.error("Usuário ou senha incorretos!");
+        console.log("Erro ao chamar a API.")
       }
     } catch (error) {
       console.error("Erro ao chamar a API", error);
