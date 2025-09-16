@@ -11,7 +11,7 @@ import {
 export default function Page() {
   return (
     <section className="grid grid-cols-1 lg:grid-cols-2 min-h-screen">
-      <div className="w-full h-full relative bg-black rounded-r-3xl">
+      <div className="w-full h-full relative bg-black lg:rounded-r-3xl">
         <Plasma
           color="#7231FF"
           speed={1.5}
