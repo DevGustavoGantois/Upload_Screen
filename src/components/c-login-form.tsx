@@ -1,6 +1,5 @@
 "use client";
 import { zodResolver } from "@hookform/resolvers/zod";
-import axios from "axios";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import z from "zod";
@@ -34,7 +33,6 @@ export function LoginForm() {
       setIsLoading(true);
 
       if (value.user === "ronni" && value.password === "ronniHomemDosSotwares123") {
-        await axios.post("https://api_do_upload_de_arquivos/login", value);
         toast.success(`O Login do usuário ${value.user} foi realizado com sucesso!`)
         router.push("/list");
       } else {

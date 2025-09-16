@@ -13,9 +13,9 @@ export default function Page() {
     <section className="grid grid-cols-1 lg:grid-cols-2 min-h-screen">
       <div className="w-full h-full relative bg-black rounded-r-3xl">
         <Plasma
-          color="#FFFFFF"
-          speed={0.2}
-          direction="reverse"
+          color="#7231FF"
+          speed={1.5}
+          direction="forward"
           scale={1.2}
           opacity={0.8}
           mouseInteractive={true}
