@@ -4,7 +4,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 export default function Page() {
   return (
     <>
-     <main className="max-w-[1000px] mx-auto">
+     <main className="max-w-[1000px] mx-auto mt-20 lg:mt-60 p-8">
       <Card>
         <CardHeader>
           <CardTitle>Login</CardTitle>
