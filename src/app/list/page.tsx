@@ -16,7 +16,6 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import axios from "axios";
-import Link from "next/link";
 import { useEffect, useState } from "react";
 
 type TablePropsUpload = {
@@ -29,8 +28,7 @@ type TablePropsUpload = {
 export default function Page() {
   const selectOptions = ["Loteamentos", "Recebimentos", "Vendas"];
   const [isLoading, setIsLoading] = useState(false);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [selected, setSelected] = useState("")
+  const [selected, setSelected] = useState("");
   const [contentTable, setContentTable] = useState<TablePropsUpload[]>([]);
 
   useEffect(() => {
@@ -50,6 +48,10 @@ export default function Page() {
     fetchTable();
   }, []);
 
+  const filteredTable = selected
+    ? contentTable.filter((row) => row.id === selected)
+    : contentTable;
+
   return (
     <section className="max-w-7xl mx-auto p-8">
       {isLoading ? (
@@ -59,7 +61,7 @@ export default function Page() {
           <Label>Qual loteamento?</Label>
           <Select onValueChange={(value) => setSelected(value)}>
             <SelectTrigger className="w-full">
-              <SelectValue  placeholder="Escolha uma opção" />
+              <SelectValue placeholder="Escolha uma opção" />
             </SelectTrigger>
             <SelectContent>
               {selectOptions.map((item, index) => (
@@ -80,13 +82,21 @@ export default function Page() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {contentTable.map((row) => (
+              {filteredTable.map((row) => (
                 <TableRow key={row.id}>
                   <TableCell className="font-medium">{row.id}</TableCell>
                   <TableCell>{row.date}</TableCell>
                   <TableCell>
-                    <Link href={row.file} rel="noopener noreferrer" className="text-underline text-blue-900">Baixar</Link>
-                 </TableCell>
+                    <a
+                      href={row.file}
+                      download
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="underline text-blue-900"
+                    >
+                      Baixar
+                    </a>
+                  </TableCell>
                   <TableCell>{row.status ? "Ativo" : "Inativo"}</TableCell>
                 </TableRow>
               ))}
@@ -95,7 +105,7 @@ export default function Page() {
         </div>
       ) : (
         <div className="flex items-center justify-center">
-            <p className="text-center text-gray-600 text-xl">Nada encontrado</p>
+          <p className="text-center text-gray-600 text-xl">Nada encontrado</p>
         </div>
       )}
     </section>
