@@ -66,7 +66,7 @@ export function LoginForm() {
                             <FormMessage />
                         </FormItem>
                     )} />
-                    <FormField name="select" control={form.control} render={({field}) => (
+                    {/* <FormField name="select" control={form.control} render={({field}) => (
                         <FormItem>
                             <FormLabel>Qual loteamento?</FormLabel>
                             <Select onValueChange={field.onChange} defaultValue={field.value}>
@@ -87,7 +87,7 @@ export function LoginForm() {
                             </Select>
                             <FormMessage />   
                         </FormItem>
-                    )} />
+                    )} /> */}
                     <FormField name="password" control={form.control} render={({field}) => (
                         <FormItem>
                             <FormLabel>Senha</FormLabel>
