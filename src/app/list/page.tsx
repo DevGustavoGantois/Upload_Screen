@@ -91,7 +91,9 @@ export default function Page() {
           </Table>
         </div>
       ) : (
-        <p className="text-center text-gray-600 text-xl">Nada encontrado</p>
+        <div className="flex items-center justify-center">
+            <p className="text-center text-gray-600 text-xl">Nada encontrado</p>
+        </div>
       )}
     </section>
   );
