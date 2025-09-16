@@ -6,12 +6,10 @@ import { useForm } from "react-hook-form";
 import z from "zod";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "./ui/form";
 import { Input } from "./ui/input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
 import { Button } from "./ui/button";
 import { useRouter } from "next/navigation";
 
 export function LoginForm() {
-    const selectOptions = ["Loteamentos", "Recebimentos", "Vendas"];
     const [isLoading, setIsLoading] = useState(false);
 
     const router = useRouter();
